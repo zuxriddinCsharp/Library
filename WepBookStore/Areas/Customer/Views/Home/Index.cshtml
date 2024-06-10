@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Book>
+
+<div class="container-fluid">
+    <div class="row justify-content-around" >
+        <!-- Sidebar -->
+        <div class="col-3 row pb-3 mt-4 mb-4" style="position:sticky;margin-left:-150px">
+            <div class="border p-3 rounded shadow-sm bg-light">
+                <h5 class="text-dark text-uppercase">Filter Books</h5>
+                <form method="get" asp-action="Index">
+                    <!-- Search Box -->
+                    <div class="form-group">
+                        <label for="search">Search</label>
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Search books..." value="@ViewBag.Search"/>
+                    </div>
+
+                    <!-- Genre Filter -->
+                    <div class="form-group mt-3">
+                        <label for="genre">Genre</label>
+                        <select class="form-control" id="genre" name="genre" asp-items="@ViewBag.Genres">
+                            <option value="">All Genres</option>
+                           
+                        </select>
+                    </div>
+
+                    <!-- Author Filter -->
+                    <div class="form-group mt-3">
+                        <label for="author">Author</label>
+                        <select class="form-control" id="author" name="author" asp-items="@ViewBag.Authors">
+                            <option value="">All Authors</option>
+                        </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3 w-100">Apply Filters</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Book Listing -->
+        <div class="col-lg-9 col-md-8">
+            <div class="row pb-3 mt-4 mb-4">
+                @foreach (var book in Model)
+                {
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm rounded">
+                            <img src="@book.ImageUrl" class="card-img-top rounded fixed-height" style="height:350px;width:300px"/>
+                            <div class="card-body">
+                                <h5 class="card-title text-dark opacity-75 text-uppercase text-center">@book.Title</h5>
+                                <p class="card-text text-warning text-center">by <b>@book.Author</b></p>
+                                <a asp-action="Details" asp-route-bookId="@book.Id" class="btn btn-primary bg-gradient border-0 form-control mt-3">Details</a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
